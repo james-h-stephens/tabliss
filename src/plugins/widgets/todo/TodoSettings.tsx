@@ -1,11 +1,25 @@
 import * as React from 'react';
+import { TodoCollection } from './TodoCollection';
+import { TodoProps } from './TodoProps';
 
-class TodoSettings extends React.PureComponent
-{
+interface Props extends TodoCollection {
+    onChange: (settings: Partial<TodoCollection>) => void;
+}
+
+class TodoSettings extends React.PureComponent<Props> {
+    static defaultProps = {
+        todos: new Map<string, TodoProps>(),
+        visible: false,
+    };
+
+    constructor(props: Props) {
+        super(props);
+
+        TodoCollection.onChange = this.props.onChange;
+    }
+
     render() {
-        return (
-            <div><i>No settings available for this plug-in.</i></div>
-        );
+        return <i>No settings for this plug-in.</i>;
     }
 }
 

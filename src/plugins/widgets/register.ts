@@ -8,7 +8,7 @@ import { Message, MessageSettings } from './message';
 import { Quote, QuoteSettings } from './quote';
 import { Search, SearchSettings } from './search';
 import { Time, TimeSettings } from './time';
-import { Todo, TodoSettings } from './todo';
+import { Todos, TodoSettings } from './todo';
 import { Weather, WeatherSettings } from './weather';
 
 registerPlugin({
@@ -71,7 +71,7 @@ registerPlugin({
     key: 'extra/widgets/todo',
     type: Type.WIDGET,
     title: 'Todo',
-    Dashboard: Todo,
+    Dashboard: Todos,
     Settings: TodoSettings,
 });
 

@@ -10,7 +10,7 @@ interface State {
     Complete: boolean,
 }
 
-export default class TodoItem extends React.Component<Props, State>{
+export default class TodoDisplay extends React.Component<Props, State>{
 
     constructor(props: Props) {
         super(props);
@@ -22,23 +22,23 @@ export default class TodoItem extends React.Component<Props, State>{
 
     public render() {
         var css = {
-            width: "100%",
-            textAlign: "left",
+            width: '100%',
+            textAlign: 'left',
             paddingLeft: 5,
         }
 
         return (
-            <div className="todoItemContainer">
+            <div className='todoItemContainer'>
                 <table>
                     <tr>
                         <th>
-                            <input className="checkbox" type="checkbox" checked={this.state.Complete} onChange={(e) => this.onChange(e)} />
+                            <input className='checkbox' type='checkbox' checked={this.state.Complete} onChange={(e) => this.onChange(e)} />
                         </th>
                         <th style={css}>
-                            <span className={"todoName" + (this.state.Complete ? " complete" : "")} > {this.props.Name} </span>
+                            <span className={'todoName' + (this.state.Complete ? ' complete' : '')} > {this.props.Name} </span>
                         </th>
                         <th>
-                            <button className="removeTodo todoButton" onClick={(event) => this.props.RemoveItem(this.props.Key)} >Remove</button>
+                            <button className='removeTodo todoButton' onClick={(event) => this.props.RemoveItem(this.props.Key)} >Remove</button>
                         </th>
                     </tr>
                 </table>
