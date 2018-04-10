@@ -1,6 +1,7 @@
 import { Type } from '../interfaces';
 import { registerPlugin } from '../registry';
 
+import { Focus, FocusSettings } from './focus';
 import { Font, FontSettings } from './font';
 import { Greeting, GreetingSettings } from './greeting';
 import { Links, LinksSettings } from './links';
@@ -11,11 +12,19 @@ import { Time, TimeSettings } from './time';
 import { Weather, WeatherSettings } from './weather';
 
 registerPlugin({
-  key: 'core/widgets/font',
-  type: Type.WIDGET,
-  title: 'Font Settings',
-  Dashboard: Font,
-  Settings: FontSettings,
+    key: 'core/widgets/focs',
+    type: Type.WIDGET,
+    title: 'Focus Settings',
+    Dashboard: Focus,
+    Settings: FocusSettings,
+});
+
+registerPlugin({
+    key: 'core/widgets/font',
+    type: Type.WIDGET,
+    title: 'Font Settings',
+    Dashboard: Font,
+    Settings: FontSettings,
 });
 
 registerPlugin({
