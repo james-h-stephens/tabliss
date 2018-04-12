@@ -7,6 +7,7 @@ require('./Quote.sass');
 
 interface Props {
   category?: string;
+  frequency: string;
   local?: Data;
   popPending: ActionCreator<Action>;
   pushPending: ActionCreator<Action>;
@@ -15,7 +16,7 @@ interface Props {
 
 interface Data {
   author?: string;
-  date: number;
+  date: Date;
   quote: string;
 }
 
@@ -23,7 +24,7 @@ const TWITTER_URL = 'https://twitter.com/intent/tweet?text=';
 
 class Quote extends React.PureComponent<Props> {
   componentWillMount() {
-    if (new Date().getDate() !== get(this.props, 'local.date')) {
+    if (this.shouldGetNewQuote()) {
       this.getQuote(this.props).then(quote => this.props.setLocal(quote));
     }
   }
@@ -51,6 +52,34 @@ class Quote extends React.PureComponent<Props> {
             </a>
           </h4>
         );
+    }
+
+    private shouldGetNewQuote(): boolean {
+        const date = get(this.props, 'local.date') instanceof Date ? get(this.props, 'local.date') : new Date(); 
+
+        const hours = Math.abs(new Date().getTime() - date.getTime()) / 3.6e6;
+        switch (this.props.frequency) {
+            case 'Per Tab':
+                {
+                    return true;
+                }
+            case 'Every 15 Minutes':
+                {
+                    return hours > .25;
+                }
+            case 'Hourly':
+                {
+                    return hours > 1;
+                }
+            case 'Daily':
+                {
+                    return new Date().getDate() !== (get(this.props, 'local.date') as Date).getDate();
+                }
+            default:
+                {
+                    return false;
+                }
+        }
   }
 
   // Get a quote
@@ -73,12 +102,12 @@ class Quote extends React.PureComponent<Props> {
       const body = await res.json();
 
       return {
-        date: new Date().getDate(),
+        date: new Date(),
         quote: body.data,
       };
     } catch (err) {
       return {
-        date: 0,
+        date: new Date(0o1, 1, 1),
         quote: 'Unable to get a new developer excuse.',
       };
     }
@@ -92,14 +121,14 @@ class Quote extends React.PureComponent<Props> {
     if (res.status === 429) {
       return {
         author: body.error.message.split('.')[1] + '.',
-        date: 0,
+        date: new Date(0o1, 1, 1),
         quote: 'Too many requests this hour.',
       };
     }
 
     return {
       author: get(body, 'contents.quotes[0].author'),
-      date: new Date().getDate(),
+      date: new Date(),
       quote: get(body, 'contents.quotes[0].quote'),
     };
   }

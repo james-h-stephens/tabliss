@@ -8,6 +8,7 @@ interface Category {
 
 interface Props {
   category?: string;
+  frequency: string;
   placeholder: string;
   onChange: (settings: { [key: string]: string|undefined }) => void;
 }
@@ -16,7 +17,19 @@ class QuoteSettings extends React.PureComponent<Props> {
   render() {
     return (
       <div className="QuoteSettings">
-        <label>
+            <label>
+                Frequency
+                <select onChange={(ev) => this.selectFrequency(ev.target.value)} value={this.props.frequency}>
+                    <option>Per Tab</option>
+                    <option>Every 15 Minutes</option>
+                    <option>Hourly</option>
+                    <option>Daily</option>
+                </select>
+        </label>
+            <label>
+                Categories
+                </label>
+            <label>
           <input
             type="radio"
             checked={this.props.category === undefined}
@@ -53,6 +66,10 @@ class QuoteSettings extends React.PureComponent<Props> {
 
   private selectCategory(category?: string) {
     this.props.onChange({ category });
+  }
+
+  private selectFrequency(frequency: string) {
+    this.props.onChange({ frequency });
   }
 }
 
